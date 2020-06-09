@@ -97,3 +97,25 @@ type HeaderSize struct {
 		MaxBytes *int `json:"max_bytes,omitempty"`
 	} `json:"header_size,omitempty"`
 }
+
+// HeaderValue represents a header name/value pair
+type HeaderValue struct {
+	// Name represents a key of a header
+	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:MinLength=1
+	Name string `json:"name"`
+	// Value represents the value of a header specified by a key
+	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:MinLength=1
+	Value string `json:"value"`
+}
+
+// HeadersPolicy defines how headers are managed during forwarding
+type HeadersPolicy struct {
+	// Set specifies a list of HTTP header values that will be set in the HTTP header
+	// +optional
+	Set []HeaderValue `json:"set,omitempty"`
+	// Remove specifies a list of HTTP header names to remove
+	// +optional
+	Remove []string `json:"remove,omitempty"`
+}
