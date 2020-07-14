@@ -6793,7 +6793,7 @@ func TestValidateHeaderAlteration(t *testing.T) {
 		},
 		wantErr: errors.New(`rewriting "Host" header is not supported`),
 	}, {
-		name: "percents are escaped",
+		name: "percents are not escaped",
 		in: &projcontour.HeadersPolicy{
 			Set: []projcontour.HeaderValue{{
 				Name:  "K-Foo",
@@ -6808,9 +6808,9 @@ func TestValidateHeaderAlteration(t *testing.T) {
 		},
 		want: &HeadersPolicy{
 			Set: map[string]string{
-				"K-Foo":           "100%%",
-				"K-Baz":           "%%DOWNSTREAM_LOCAL_ADDRESS%%",
-				"Lot-Of-Percents": "%%%%%%%%%%",
+				"K-Foo":           "100%",
+				"K-Baz":           "%DOWNSTREAM_LOCAL_ADDRESS%",
+				"Lot-Of-Percents": "%%%%%",
 			},
 		},
 	}}
